@@ -6,5 +6,7 @@ Architectural framework similar to C# ASP.NET framework. His ideas were taken as
 
 Artificial intelligence of checkers works as c++ executable file, its source https://github.com/holodnukfedor/CheckersAlgorithm.
 
+In front-end are used jquery and bootstrap
+
 Site work, you can see here http://f0116700.xsph.ru/. 
 
