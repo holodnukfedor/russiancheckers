@@ -1,0 +1,126 @@
+.gameArea {
+    display: inline-block;
+}
+.gameAreaLeft {
+    margin-right: 10px;
+}
+.gameAreaRight {
+    margin-left: 10px;
+}
+.gameAreaLeft, .gameAreaRight, .gameAreaCenter {
+    float: left;
+}
+.gameAreaLeft > * {
+    margin: 5px 0px;
+}
+.gameAreaRight > * {
+    margin: 5px 0px;
+}
+.whoseMoveLabelParent {
+    padding: 10px;
+}
+.yourMoveLabel, .opponentMoveLabel {
+    padding: 10px;
+    color: white;
+    border-radius: 5px;
+    font-size: 18px;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-weight: 300;
+}
+.yourMoveLabel {
+    background-color: green;
+    background: linear-gradient(to top, #403b12, #21f100);
+}
+.opponentMoveLabel {
+    background-color: darkred;
+    background: linear-gradient(to top, #3e0409, #f1002c);
+}
+.playerName {
+    margin: 12px;
+}
+.playerAvatar {
+    width: 100px;
+    height: 100px;
+}
+.blackSideLabel, .whiteSideLabel {
+    margin-right: auto;
+    margin-left: auto;
+    width: 40px;
+    height: 40px;
+    border-style: solid;
+    border-color: black;
+    border-width: 1px;
+}
+.whiteSideLabel {
+    background-color: white;
+}
+.scoreContainer {
+    display: table;
+    margin: 10px 0px;
+}
+.scoreContainer > * {
+    display: table-cell;
+    vertical-align: middle;
+    padding: 5px;
+}
+.blackSideLabel {
+    background-color: black;
+}
+.scoreSpawnBlack, .scoreSpawnWhite {
+    width: 34px;
+    height: 34px;
+    border-radius: 17px;
+    display: inline-block;
+    box-shadow: 1px 2px 5px 0px rgba(0, 0, 0, 0.68);
+}
+.scoreSpawnBlack {
+    background-color: black;
+}
+.scoreSpawnWhite {
+    background-color: white;
+}
+.gameHelp {
+    background-color: #65821b;
+    color: yellow;
+    padding: 10px 0px;
+    width: 380px;
+}
+.gameHelpCloseParent {
+    padding-right: 10px;
+}
+.gameHelpClose {
+    color: #eceba0;
+    text-shadow: 0 1px 0 #2b2a28;
+    opacity: 1;
+}
+.lastOpponentMoveContainer {
+    margin-top: 10px;
+    text-align: left;
+    background: linear-gradient(to left, #fff6a2, #30ff40);
+    font-weight: bold;
+    padding-left:10px;
+}
+.surrenderText {
+    font-size: 18px;
+}
+.dangerDialogFooter {
+    border-bottom-right-radius: 6px;
+    border-bottom-left-radius: 6px;
+    background-color: #f2dede;
+}
+.dialogHeader {
+    color: white;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    background-color: #5d5a5a;
+    border-color: #5d5a5a;
+}
+.dialogBody {
+    background-color: #171717;
+    color: white;
+}
+.playerInfo {
+    font-size: 14pt;
+    font-family: "Verdana";
+    color: #c19d30;
+}

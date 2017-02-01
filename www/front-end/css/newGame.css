@@ -1,0 +1,22 @@
+.newGameContainer {
+    max-width: 500px;
+}
+.blackSideLabel, .whiteSideLabel {
+    width: 40px;
+    height: 40px;
+    border-style: solid;
+    border-color: black;
+    border-width: 1px;
+    display: inline-block;
+}
+.selectedSideLabel {
+    border-width: 2px;
+    border-color: #f63718
+}
+.whiteSideLabel {
+    background-color: white;
+}
+.blackSideLabel {
+    background-color: black;
+    margin-right: 20px;
+}

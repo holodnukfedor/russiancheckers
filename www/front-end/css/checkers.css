@@ -1,0 +1,43 @@
+.centerCheckFieldBorder {
+    border-style: solid;
+    border-color: papayawhip;
+}
+.clearBoth {
+    clear: both;
+}
+.floatLeft {
+    float:left;
+}
+.blackField {
+    background-color: saddlebrown;
+}
+.whiteField {
+    background-color: papayawhip;
+}
+.spawn {
+    position: relative;
+}
+.spawnBlack {
+    background-color: black;
+}
+.spawnWhite {
+    background-color: white;
+}
+.checkDescCell {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+}
+.checkersDescFont {
+    color: white;
+    font-size: 14px;
+    font-family: "Helvetica Neue, Helvetica,Arial,sans-serif";
+}
+.chosenSpawn {
+    background-color: #a1ce0f;
+}
+.canMove {
+    /*border: 3px solid #188b13;*/
+    background: #80b500;
+    background: radial-gradient(#fffa55, #80b500)
+}

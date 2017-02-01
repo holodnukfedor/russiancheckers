@@ -1,0 +1,17 @@
+.playerAvatar {
+    width: 100px;
+    height: 100px;
+    float: left;
+    margin-right: 20px;
+}
+.playerInfo {
+    font-size: 16pt;
+    font-family: "Verdana";
+    color: #c19d30;
+}
+.description {
+    font-size: 14pt;
+}
+.changeAvatarForm {
+    width: 500px
+}
