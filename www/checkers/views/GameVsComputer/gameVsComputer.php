@@ -1,4 +1,4 @@
-<div class="row" xmlns="http://www.w3.org/1999/html">
+<div class="row">
     <?php
         $showTips = $this->parameters['data']['gameInfo']['viewConfigure']['showTips'];
         $showMoveRecords = $this->parameters['data']['gameInfo']['viewConfigure']['showMoveRecord'];
