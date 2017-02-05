@@ -427,9 +427,7 @@ use checkersDAL\interfaces\IRepository;
                 }
                 Utils::exec("{$this->programCheckersName} {$gameInfo['difficulty_level']} {$gameInfo['white_checkers']} {$gameInfo['black_checkers']} 0 {$gameInfo['is_player_color_black']} {$playerMoveStr} $isBattleMove", $programResponse);
 
-                if (!$programResponse[5]) {//проверка на условие проигрыша
-                    $this->recordFailResult($userId);  //не перенаправлю, поскольку перенаправить в js при отсутствии ходов
-                }
+
 
                 $enemyMove = $this->parseMove($programResponse[2]);
 
@@ -449,6 +447,9 @@ use checkersDAL\interfaces\IRepository;
                     $this->recordMove($gameInfo, implode(':', $move['movePos']), '');
                     $this->sendResultRedirect();
                     return;
+                }
+                else if (!$programResponse[5]) {//проверка на условие проигрыша
+                    $this->recordFailResult($userId);  //не перенаправлю, поскольку перенаправить в js при отсутствии ходов
                 }
 
                 $blackScore = $this->countScore($gameInfo['white_checkers']);
