@@ -427,8 +427,6 @@ use checkersDAL\interfaces\IRepository;
                 }
                 Utils::exec("{$this->programCheckersName} {$gameInfo['difficulty_level']} {$gameInfo['white_checkers']} {$gameInfo['black_checkers']} 0 {$gameInfo['is_player_color_black']} {$playerMoveStr} $isBattleMove", $programResponse);
 
-
-
                 $enemyMove = $this->parseMove($programResponse[2]);
 
                 if ($programResponse[2] != "victory") { //проверка на условие выигрыша
