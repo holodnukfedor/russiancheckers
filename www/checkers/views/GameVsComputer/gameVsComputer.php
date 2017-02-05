@@ -93,7 +93,7 @@
         </div>
     </div>
 
-    <div class="col-md-9 text-center">
+    <div class="col-md-<?= ($showMoveRecords?'9':'12'); ?> text-center gameAreaColumn">
         <div class="gameArea">
             <div class="gameAreaLeft">
                 <div class="playerName playerInfo"><?= $this->parameters['data']['profileData']['login']; ?></div>

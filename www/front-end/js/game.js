@@ -66,12 +66,16 @@ function hideGameHelp() {
 function showRecordMovePanel() {
     $('.recordMovePanel').show();
     $('.checkersFieldPlace').data('show_move_records', true);
+    $('.gameAreaColumn').removeClass('col-md-12');
+    $('.gameAreaColumn').addClass('col-md-9');
     viewConfigureSendServer();
 }
 
 function hideRecordMovePanel() {
     $('.recordMovePanel').hide();
     $('.checkersFieldPlace').data('show_move_records', '');
+    $('.gameAreaColumn').removeClass('col-md-9');
+    $('.gameAreaColumn').addClass('col-md-12');
     viewConfigureSendServer();
 }
 
