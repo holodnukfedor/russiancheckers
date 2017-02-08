@@ -15,7 +15,8 @@ Checkers.defaultOptions = {//возможно нахзвания классов 
     blackSpawnClass: 'spawnBlack',
     whiteSpawnClass: 'spawnWhite',
     chosenSpawnCs: 'chosenSpawn',
-    canMoveCs: 'canMove'
+    canMoveCs: 'canMove',
+    fontSize: '14px'
 };
 function Checkers(options) //можно описать обработку ошибок, возможно стоит изменить не забивать классы магическими числами
 {
@@ -25,6 +26,7 @@ function Checkers(options) //можно описать обработку оши
     this.resultUrl = options.resultUrl;
     this.fieldRowSize = 8;
     this.checkerFieldSize = options.checkerFieldSize || Checkers.defaultOptions.checkerFieldSize;
+    this.fontSize = options.fontSize || Checkers.defaultOptions.fontSize;
     this.blackFieldClass = options.blackFieldClass || Checkers.defaultOptions.blackFieldClass;
     this.whiteFieldClass = options.whiteFieldClass || Checkers.defaultOptions.whiteFieldClass;
     this.borderWidth = options.borderWidth || Checkers.defaultOptions.borderWidth;
@@ -159,6 +161,7 @@ Checkers.prototype.setSizes = function () {
         width: queenImgSize + 'px',
         height: queenImgSize + 'px',
     });
+    $('.' + this.checkDescFont).css('font-size', this.fontSize);
 };
 Checkers.prototype.placeCheckers = function () {
     var spawn = $('<div class="' + Checkers.defaultOptions.spawnClass + '"></div>')

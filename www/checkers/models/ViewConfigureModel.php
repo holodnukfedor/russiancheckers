@@ -32,5 +32,13 @@ class ViewConfigureModel extends Model
                 new EnumVR(array('allowedValues' => array('true', false)))
             )
         ));
+        $this->modelProperties[] = new ModelProperty(array(
+            "name" => "checkersFieldSize",
+            "value"=> 'small',
+            "type" => "radio",
+            "validationRules" => array(
+                new EnumVR(array('allowedValues' => array('small', 'average', 'big')))
+            )
+        ));
     }
 }

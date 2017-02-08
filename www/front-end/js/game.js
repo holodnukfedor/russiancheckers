@@ -13,18 +13,24 @@ $(function() {
     $('.moveListPanelNext').on('click', showNextMoveList);
 
     if ($('.checkersFieldPlace').data('player_side') == 'black') goneToLastPage = true;
+    setGameHelpSize();
 });
 
+var checkersGame;
 function initializeGame() {
     var white_checkers_str = $('.checkersFieldPlace').data('white_checkers');
     var black_checkers_str = $('.checkersFieldPlace').data('black_checkers');
     var checkers = parseCheckersString(white_checkers_str, 0);
     checkers = checkers.concat(parseCheckersString(black_checkers_str, 1));
-    var checkersGame = new Checkers({
+    var sizes = calculateCheckersSizes();
+    checkersGame = new Checkers({
         placeSelector : '.checkersFieldPlace',
         gameServiceUrl : '/GameVsComputer/MakeMove',
         resultUrl: '/GameVsComputer/Result',
         checkers: checkers,
+        checkerFieldSize: sizes.newCheckerFieldSize,
+        fontSize: sizes.newFontSize,
+        descriptionStrSize: sizes.newDescStrSize,
         availableMoves: $('.checkersFieldPlace').data('available_moves'),
         enemyMove: $('.checkersFieldPlace').data('enemy_move'),
         isEnemyMove: $('.checkersFieldPlace').data('is_enemy_move'),
@@ -83,10 +89,55 @@ function hideRecordMovePanel() {
     viewConfigureSendServer();
 }
 
+function calculateCheckersSizes() {
+    var sizeStr = $('.checkersFieldSize:checked').val();
+    var sizes = new Object();
+
+    sizes.newCheckerFieldSize = 40;
+    sizes.newFontSize = '14px';
+    sizes.newDescStrSize = 20;
+    switch (sizeStr) {
+        case "small":
+            sizes.newCheckerFieldSize = 40;
+            sizes.newFontSize = '14px';
+            sizes.newDescStrSize = 20;
+            break;
+        case "average":
+            sizes.newCheckerFieldSize = 50;
+            sizes.newFontSize = '16px';
+            sizes.newDescStrSize = 22;
+            break;
+        case "big":
+            sizes.newCheckerFieldSize = 64;
+            sizes.newFontSize = '16pt';
+            sizes.newDescStrSize = 28;
+            break;
+    }
+    return sizes;
+}
+
+function setCheckersFieldSize() {
+    var sizes = calculateCheckersSizes();
+
+    checkersGame.checkerFieldSize = sizes.newCheckerFieldSize;
+    checkersGame.fontSize = sizes.newFontSize;
+    checkersGame.descriptionStrSize = sizes.newDescStrSize;
+    checkersGame.setSizes();
+
+    setGameHelpSize();
+}
+
+function setGameHelpSize() {
+    var horDescStrWidth = $('.horDescStr ').css('width');
+    $('.gameHelp').css('width', horDescStrWidth);
+}
+
 function viewConfigureSendServer() {
+    setCheckersFieldSize();
     var viewConfigure = {
         showTips: $('.checkersFieldPlace').data('show_tips'),
-        showMoveRecord: $('.checkersFieldPlace').data('show_move_records')
+        showMoveRecord: $('.checkersFieldPlace').data('show_move_records'),
+        checkersFieldSize: $('.checkersFieldSize:checked').val()
     };
     $.ajax({
         type: 'POST',
