@@ -14,7 +14,7 @@ interface IGameVsCompService
     public function newGame($userId, $gameConfigure);
     public function getCurrentGameInfo($userId);
     public function getComputerAvatarPath();
-    public function getCurrentGameMoves($userId);
+    public function getCurrentGameMoves($userId, $pageNumber);
     public function surrender($userId);
     public function makeMove($move, $userId);
     public function setViewConfigure($viewConfigure);
@@ -22,4 +22,6 @@ interface IGameVsCompService
     public function getGameResult($userId);
     public function offerDraw($userId);
     public function getUserStatistics($userId);
+    public function getMovesOnPage();
+    public function setMovesOnPage($movesOnPage);
 }

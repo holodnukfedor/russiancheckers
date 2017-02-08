@@ -58,7 +58,9 @@ class GameVsComputerController extends Controller
                         'gameInfo' => $currentGameInfo,
                         'gameMoves' => $gameMoves,
                         'surrenderHref' => '/GameVsComputer/Surrender',
-                        'offerDrawHref' => '/GameVsComputer/OfferDraw'
+                        'offerDrawHref' => '/GameVsComputer/OfferDraw',
+                        'movesOnPage' => $this->gameVsCompService->getMovesOnPage(),
+                        'getMovesUrl' => '/GameVsComputer/GetMoves'
                     )
                 ));
             }
@@ -124,6 +126,20 @@ class GameVsComputerController extends Controller
         }
     }
 
+    public function GetMovesPOST() {
+        if ($this->authService->isAuthorised()) {
+            $page = intval($_POST['page']); //сделать модель с валидацией
+
+            $userId = $this->authService->getCurrentUserId();
+            $gameMoves = $this->gameVsCompService->getCurrentGameMoves($userId, $page);
+            echo json_encode($gameMoves);
+        }
+        else {
+            $this->authService->setReturnUrl('/GameVsComputer');
+            throw new AjaxException("Выполните вход", 401);
+        }
+    }
+
     public function SetViewConfigurePOST() {
         if ($this->authService->isAuthorised()) {
             $viewConfigureModel = new ViewConfigureModel();
@@ -144,6 +160,8 @@ class GameVsComputerController extends Controller
     public function Result() {
         if ($this->authService->isAuthorised()) {
             $userId = $this->authService->getCurrentUserId();
+
+            $this->gameVsCompService->setMovesOnPage(10000);
             $gameMoves = $this->gameVsCompService->getCurrentGameMoves($userId);
             $gameResult = $this->gameVsCompService->getGameResult($userId); //летиит исключение, если игра не закончена
             $profileData = $this->authService->getProfileData();

@@ -9,6 +9,10 @@ $(function() {
     $('.saveViewConfigure').on('click', saveViewConfigure);
     $('.offerDrawBtn').on('click', offerDraw);
     $('#drawResponseDialog').on('hidden.bs.modal', offerDrawResponseClose);
+    $('.moveListPanelPrev').on('click', showPrevMoveList);
+    $('.moveListPanelNext').on('click', showNextMoveList);
+
+    if ($('.checkersFieldPlace').data('player_side') == 'black') goneToLastPage = true;
 });
 
 function initializeGame() {
@@ -113,17 +117,41 @@ function parseCheckersString(checkers_str, isBlack) {
     }
     return checkers;
 }
+var goneToLastPage = false;
 function recordMove(options) {
     var moveStr = options.move.join(':');
     var side = options.side;
 
+    if (goneToLastPage) {
+        goneToLastPage = false;
+        return;
+    }
+
+     var movePagesCount = Number($('.moveListPanelFooter').data('page_count'));
+     var trs = $('.moveList').find('tbody').find('tr');
+     var movesOnPage = Number($('.moveListPanelFooter').data('on_page'));
+
+     if (movePagesCount != 1) {
+         var currentPage = Number($('.moveListPanelFooter').data('page'));
+         if (currentPage < movePagesCount) {
+             goneToLastPage = true;
+             goToMoveListPage(movePagesCount);
+        }
+     }
 
     if (side == 'white') {
-        if (options.moveNumber == 1 && $('.moveList').find('tbody').find('tr').length == 1) return;
+        if (trs.length == movesOnPage) {
+            $('.moveList').find('tbody').empty();
+
+            var movesPage = $('.moveListPanelFooter').data('page');
+            $('.moveListPanelFooter').data('page', movesPage + 1);
+            $('.moveListPanelFooter').data('page_count', movePagesCount + 1);
+            $('.moveListPanelFooter').show();
+        }
         $('.moveList').find('tbody').append('<tr><td>' + options.moveNumber + '</td><td>' + moveStr + '</td><td></td></tr>');
     }
     else {
-        var lastCell = $('.moveList').find('tbody').find('tr').last().find('td').last();
+        var lastCell = trs.last().find('td').last();
         lastCell.text(lastCell.text() + ' ' + moveStr);
     }
 }
@@ -184,4 +212,68 @@ function offerDraw () {
 function offerDrawResponseClose() {
     var resultUrl = $('#offerDrawDialog').data('result_url');
     if ($('#drawResponseDialog').data('agreed')) document.location.replace(resultUrl);
+}
+function showPrevMoveList(event) {
+    event.preventDefault();
+    if (!$(this).hasClass('disabled')) {
+        var prevPage = Number($('.moveListPanelFooter').data('page')) - 1;
+        goToMoveListPage(prevPage);
+    }
+}
+function showNextMoveList(event) {
+    event.preventDefault();
+    if (!$(this).hasClass('disabled')) {
+        var nextPage =  Number($('.moveListPanelFooter').data('page')) + 1;
+        goToMoveListPage(nextPage);
+    }
+}
+function goToMoveListPage(page) {
+    $('.moveListPanelPrev').removeClass('disabled');
+    $('.moveListPanelNext').removeClass('disabled');
+    var getMovesUrl =  $('.moveListPanelFooter').data('get_moves_url');
+    $.ajax({
+        type: 'POST',
+        url: getMovesUrl,
+        data: {
+            page: page
+        },
+        success: function(data) {
+            movesListLoad(data);
+        },
+        error: processAjaxError
+    });
+}
+function goToLastMovePageIfNeed() {
+    var movePagesCount = Number($('.moveListPanelFooter').data('page_count'));
+    if (movePagesCount == 1) return;
+
+    var currentPage = Number($('.moveListPanelFooter').data('page'));
+    if (currentPage < movePagesCount) goToMoveListPage(movePagesCount);
+}
+function movesListLoad(data) {
+    var moveListInfo = JSON.parse(data);
+    var tbody = $('.moveListPanel').find('tbody').first();
+    tbody.empty();
+
+    var paginationInfo = moveListInfo.paginationInfo;
+    $('.moveListPanelFooter').data('page', paginationInfo.pageNumber);
+    $('.moveListPanelFooter').data('page_count', paginationInfo.pageCount);
+
+    if (paginationInfo.pageNumber == 1) {
+        $('.moveListPanelPrev').addClass('disabled');
+    }
+    else if (paginationInfo.pageNumber == paginationInfo.pageCount) {
+        $('.moveListPanelNext').addClass('disabled');
+    }
+
+    var moveList = moveListInfo.items;
+
+    for (var i = 0; i < moveList.length; ++i) {
+        var moveTr = '<tr>';
+        moveTr += '<td>' + moveList[i].number + '</td>';
+        moveTr += '<td>' + moveList[i].white_move + '</td>';
+        moveTr += '<td>' + moveList[i].black_move + '</td>';
+        moveTr += '</tr>';
+        tbody.append(moveTr);
+    }
 }

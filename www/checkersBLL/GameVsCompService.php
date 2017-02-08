@@ -58,6 +58,9 @@ use checkersDAL\interfaces\IRepository;
         private $mediumRecursLvl = 6;
         private $hardRecursLvl = 8;
 
+        private $lastMove = 10000;
+        private $movesOnPage = 10;
+
         private function getDifficultyRecursLvl($difficultyLvl) {
             switch ($difficultyLvl) {
                 case (self::hard):
@@ -113,6 +116,16 @@ use checkersDAL\interfaces\IRepository;
         private function gameIsEnded($userId) {
             return $this->vSCompResCheckRepository->get($userId);
         }
+
+        public function getMovesOnPage(){
+            return $this->movesOnPage;
+        }
+
+        public function setMovesOnPage($movesOnPage)
+        {
+            $this->movesOnPage = $movesOnPage;
+        }
+
 
         public function updateGame($gameEntity)
         {
@@ -230,7 +243,7 @@ use checkersDAL\interfaces\IRepository;
                         "orderField" => "number",
                         "orderDirection" => "ASC",
                         "pageNumber" => 1,
-                        "onPage" => 10000
+                        "onPage" => $this->lastMove
                     )
                 );
                 if (count($allGameMoves['items']) > 0) {
@@ -503,15 +516,15 @@ use checkersDAL\interfaces\IRepository;
             else echo json_encode(array('agreed' => false));
         }
 
-        public function getCurrentGameMoves($userId)
+        public function getCurrentGameMoves($userId, $pageNumber = 0)
         {
             return $this->gameMoveRepository->getAll(
                 array(
                     "whereCondition" => "white_user_id = $userId OR black_user_id = $userId",
                     "orderField" => "number",
                     "orderDirection" => "ASC",
-                    "pageNumber" => 1,
-                    "onPage" => 10000
+                    "pageNumber" => ($pageNumber?$pageNumber:$this->lastMove),
+                    "onPage" => $this->movesOnPage
                 )
             );
         }
