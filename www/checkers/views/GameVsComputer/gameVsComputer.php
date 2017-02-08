@@ -3,6 +3,10 @@
         $showTips = $this->parameters['data']['gameInfo']['viewConfigure']['showTips'];
         $showMoveRecords = $this->parameters['data']['gameInfo']['viewConfigure']['showMoveRecord'];
         $isPlayerMove = $this->parameters['data']['gameInfo']['is_player_move'];
+        $gameMoves = $this->parameters['data']['gameMoves']['items'];
+        $gameMovesPaginationInfo = $this->parameters['data']['gameMoves']['paginationInfo'];
+        $movesOnPage = $this->parameters['data']['movesOnPage'];
+        $getMovesUrl = $this->parameters['data']['getMovesUrl'];
     ?>
     <div class="modal fade" id="configureDialog" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
@@ -208,7 +212,8 @@
                 Запись ходов
                 <button type="button" class="close closeRecordMovePanel">
                     <span>&times;</span>
-                </button></div>
+                </button>
+            </div>
             <div class="panel-body moveListPanel">
                 <table class="table table-condensed moveList">
                     <thead>
@@ -217,7 +222,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <? foreach ($this->parameters['data']['gameMoves']['items'] as $move): ?>
+                        <? foreach ($gameMoves as $move): ?>
                             <tr>
                                 <td>
                                     <?= $move['number']; ?>
@@ -232,6 +237,18 @@
                         <? endforeach ?>
                     </tbody>
                 </table>
+            </div>
+            <div class="panel-footer moveListPanelFooter"
+                <?= ($gameMovesPaginationInfo['pageCount'] > 1?'':'style="display:none"'); ?>
+                data-page="<?= $gameMovesPaginationInfo['pageNumber'];?>"
+                 data-on_page="<?= $movesOnPage;?>"
+                 data-get_moves_url="<?= $getMovesUrl;?>"
+                 data-page_count="<?= $gameMovesPaginationInfo['pageCount'];?>"
+            >
+                <ul class="pager moveListPanelPager">
+                    <li class="moveListPanelPrev"><a href="#">&larr;Пред.</a></li>
+                    <li class="moveListPanelNext disabled"><a href="#">След.&rarr;</a></li>
+                </ul>
             </div>
         </div>
     </div>

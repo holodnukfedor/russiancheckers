@@ -124,3 +124,16 @@
     font-family: "Verdana";
     color: #c19d30;
 }
+
+.moveListPanelFooter {
+    padding: 1px 5px;
+    background-color: #d3ebca;
+}
+
+.moveListPanelPager {
+    margin: 0px 0px;
+}
+
+.moveListPanelPager li > a {
+    padding: 1px 14px;
+}
