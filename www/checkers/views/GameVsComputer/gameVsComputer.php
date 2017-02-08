@@ -2,6 +2,7 @@
     <?php
         $showTips = $this->parameters['data']['gameInfo']['viewConfigure']['showTips'];
         $showMoveRecords = $this->parameters['data']['gameInfo']['viewConfigure']['showMoveRecord'];
+        $checkersFieldSize = $this->parameters['data']['gameInfo']['viewConfigure']['checkersFieldSize'];
         $isPlayerMove = $this->parameters['data']['gameInfo']['is_player_move'];
         $gameMoves = $this->parameters['data']['gameMoves']['items'];
         $gameMovesPaginationInfo = $this->parameters['data']['gameMoves']['paginationInfo'];
@@ -17,6 +18,14 @@
                 </div>
                 <div class="modal-body">
                     <form class="form-horizontal viewConfigureForm">
+                        <div class="form-group">
+                            <label class="col-sm-offset-2 col-sm-3 control-label">Размер игрового поля</label>
+                            <div class="col-sm-7">
+                                <label class="radio-inline"> <input type="radio" class="checkersFieldSize" name="checkersFieldSize" id="checkersFieldSizeSmall" value="small" <?= ($checkersFieldSize == "small"?"checked":""); ?>> Маленький </label>
+                                <label class="radio-inline"> <input type="radio" class="checkersFieldSize" name="checkersFieldSize" id="checkersFieldSizeMiddle" value="average" <?= ($checkersFieldSize == "average"?"checked":""); ?>> Средний </label>
+                                <label class="radio-inline"> <input type="radio" class="checkersFieldSize" name="checkersFieldSize" id="checkersFieldSizeBig" value="big" <?= ($checkersFieldSize == "big"?"checked":""); ?>> Большой </label>
+                            </div>
+                        </div>
                         <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-10">
                                 <div class="checkbox">

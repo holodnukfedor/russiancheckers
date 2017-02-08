@@ -148,12 +148,14 @@ use checkersDAL\interfaces\IRepository;
         public function setViewConfigure($viewConfigure) {
             $_SESSION['showTips'] = $viewConfigure['showTips'];
             $_SESSION['showMoveRecord'] = $viewConfigure['showMoveRecord'];
+            $_SESSION['checkersFieldSize'] = $viewConfigure['checkersFieldSize'];
         }
 
         public function getViewConfigure() {
             $viewConfigure = array();
             $viewConfigure['showTips'] = $_SESSION['showTips'];
             $viewConfigure['showMoveRecord'] = $_SESSION['showMoveRecord'];
+            $viewConfigure['checkersFieldSize'] = ($_SESSION['checkersFieldSize'] or 'small');
             return $viewConfigure;
         }
 
